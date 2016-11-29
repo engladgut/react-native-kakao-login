@@ -57,6 +57,7 @@ RCT_REMAP_METHOD(login,
             
             NSDictionary *userSession = @{
                                           @"accessToken": [KOSession sharedSession].accessToken,
+                                          @"refreshToken":  [KOSession sharedSession].refreshToken,
                                           @"id": result.ID,
                                           @"nickname": [result propertyForKey:@"nickname"],
                                           // water0126
