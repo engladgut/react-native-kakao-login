@@ -51,8 +51,17 @@ public class KakaoLoginModule extends ReactContextBaseJavaModule implements Acti
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (Session.getCurrentSession().handleActivityResult(requestCode, resultCode, data)){
+      Bundle bundle = data.getExtras();
+        if (bundle.get("com.facebook.LoginFragment:Result") != null) {
             return;
+        }
+
+        try {
+            if (Session.getCurrentSession().handleActivityResult(requestCode, resultCode, data)){
+                return;
+            }
+        } catch (Exception e) {
+
         }
     }
 
