@@ -12,7 +12,6 @@ import com.helpkang.kakaologin.mo.ReactKakaoLogin;
 import com.kakao.auth.Session;
 
 public class KakaoLoginModule extends ReactContextBaseJavaModule implements ActivityEventListener {
-
     private ReactKakaoLogin rkl;
 
     public KakaoLoginModule(ReactApplicationContext reactContext) {
@@ -22,36 +21,40 @@ public class KakaoLoginModule extends ReactContextBaseJavaModule implements Acti
 
     @ReactMethod
     public void login(Promise promise){
-//        initKakao();
         rkl.login(promise);
     }
 
     @ReactMethod
     public void logout(Promise promise){
-//        initKakao();
         rkl.logout(promise);
     }
 
-    public void initKakao(){
+    public void initKakao() {
         if( this.rkl  != null) return;
         ReactApplicationContext reactContext = getReactApplicationContext();
         reactContext.addActivityEventListener(this);
 
 //        Log.d("current context", reactContext.toString());
-//
 //        Log.d("current Activity", reactContext.getCurrentActivity().toString());
 
         this.rkl = new ReactKakaoLogin(reactContext);
     }
 
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        initKakao();
+        // KakaoSDK.init(new KakaoSDKAdapter());
+    }
 
     @Override
     public void onActivityResult(Activity activity, int requestCode, int resultCode, Intent data) {
-      onActivityResult(requestCode, resultCode, data);
+        onActivityResult(requestCode, resultCode, data);
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-      Bundle bundle = data.getExtras();
+        // 페북 로그인일 경우 처리 안 함.
+        Bundle bundle = data.getExtras();
         if (bundle.get("com.facebook.LoginFragment:Result") != null) {
             return;
         }

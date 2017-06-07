@@ -32,15 +32,12 @@ import static com.kakao.usermgmt.UserManagement.requestMe;
 //import com.kakao.auth.ErrorResult;
 
 public class ReactKakaoLogin {
-
-
     private static final String LOG_TAG = "KakaoTalk";
     private final ReactApplicationContext reactApplicationContext;
 
     private Activity currentActivity;
     private SessionCallback sessionCallback;
     private boolean init = false;
-
 
     /**
      * Initialize cordova plugin kakaotalk
@@ -49,8 +46,6 @@ public class ReactKakaoLogin {
     public ReactKakaoLogin(ReactApplicationContext context) {
         Log.v(LOG_TAG, "kakao : initialize");
         this.reactApplicationContext = context;
-
-
     }
 
     private void initialize(){
@@ -74,8 +69,6 @@ public class ReactKakaoLogin {
         this.sessionCallback = new SessionCallback(promise);
         Session.getCurrentSession().addCallback(sessionCallback);
         Session.getCurrentSession().open(AuthType.KAKAO_TALK, currentActivity);
-
-
     }
 
     /**
@@ -102,7 +95,6 @@ public class ReactKakaoLogin {
         Log.v(LOG_TAG, "kakao : handleResult");
         WritableMap response = Arguments.createMap();
 
-
         response.putString("id", userProfile.getId()+"");
         response.putString("nickname", userProfile.getNickname());
         response.putString("profile_image", userProfile.getProfileImagePath());
@@ -112,7 +104,6 @@ public class ReactKakaoLogin {
 
         return response;
     }
-
 
     /**
      * Class SessonCallback
@@ -155,8 +146,6 @@ public class ReactKakaoLogin {
                     promise.resolve(userMap);
                 }
 
-
-
                 @Override
                 public void onNotSignedUp() {
                     removeCallback();
@@ -177,7 +166,6 @@ public class ReactKakaoLogin {
         }
     }
 
-
     /**
      * Return current activity
      */
@@ -196,7 +184,6 @@ public class ReactKakaoLogin {
      * Class KakaoSDKAdapter
      */
     private static class KakaoSDKAdapter extends KakaoAdapter {
-
         private final Activity currentActivity;
 
         public KakaoSDKAdapter(Activity activity) {
@@ -248,5 +235,4 @@ public class ReactKakaoLogin {
             };
         }
     }
-
 }
